@@ -1,56 +1,51 @@
+import { useEffect, useState } from "react";
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
-export default function BasicMenu() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const [publishers, setPublishers] = React.useState([]);
+function PublisherMenu( { formData, setFormData }) {
     
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
     
-    React.useEffect(() => {
-        async function getPublishers() {
+    const [publishers, setPublishers] = useState([]);
+    const [selectedPublisher, setSelectedPublisher] = useState('');
+
+    const handleChange = (event) => {
+        const publisherId = event.target.value;
+        setSelectedPublisher(event.target.value);
+        
+        setFormData({
+                ...formData, publisher: publisherId
+            })
+    };
+
+    useEffect(() => {
+        const getPublishers = async () => {
             const response = await fetch('http://localhost:3000/api/getpublishers');
             const data = await response.json();
             setPublishers(data);
+            
         }
 
         getPublishers();
-    }, [anchorEl])
+    }, [])
 
-    return (
-        <div>
-        <Button
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-        >
-        Publishers
-        </Button>
-        <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        slotProps={{
-            list: {
-                'aria-labelledby': 'basic-button',
-            },
-        }}
-        >
+    return (<>
+    <FormControl fullWidth>
+      <InputLabel id="publishers">Publishers</InputLabel>
+      <Select
+        labelId="publishers"
+        value={selectedPublisher}
+        label="Plublisher"
+        onChange={handleChange}
+      >
         {publishers.map((publisher) => {
-            return <MenuItem key={publisher.id}>{publisher.publisher}</MenuItem>
+            return <MenuItem key={publisher.id} value={publisher.id}>{publisher.publisher}</MenuItem>
         })}
-        </Menu>
-        </div>
-    );
+        
+
+      </Select>
+    </FormControl>
+        </ >
+    )
 }
+
+export default PublisherMenu;

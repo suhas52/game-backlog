@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db/queries');
+const { end } = require('../db/pool');
 
 // Values are hardcoded as I have not created a frontend to utilize the data yet
 
@@ -17,7 +18,9 @@ router.get("/gamelist", async (req, res) => {
 
 router.post("/addgame", async (req, res) => {
     try {
-        await db.addNewGame('Super Mario Odyssey', '2017-10-27', null, null, 1 );
+        const { title, release_date, start_date, end_date, description, publisher} = req.body;
+        console.log( title, release_date, start_date, end_date, description, publisher )
+        await db.addNewGame(title, release_date, start_date, end_date, publisher, description,  null);
         res.status(200).json({status: 'Added game'});
     } catch (err) {
         console.log('Error: Failed to add game.')
