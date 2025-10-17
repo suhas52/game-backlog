@@ -1,0 +1,14 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.game-list {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+}

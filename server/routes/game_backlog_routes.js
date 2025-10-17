@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/queries');
 
+// Values are hardcoded as I have not created a frontend to utilize the data yet
+
 router.get("/gamelist", async (req, res) => {
     try {
         const games = await db.getAllGames();
@@ -42,5 +44,16 @@ router.post("/addpublisher", async(req, res) => {
         res.status(500).json({error: err});
     }
 })
+
+router.post("/getpublishers", async(req, res) => {
+    try {
+        const publishers  = await db.getPublishers();
+        res.status(200).json({succss: 'Got publishers'})
+        console.log(publishers)
+    } catch (err) {
+        console.log('Error: Failed to get publishers.', err);
+        res.status(500).json({error: err})
+    }
+} )
 
 module.exports = router;
