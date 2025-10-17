@@ -45,10 +45,10 @@ router.post("/addpublisher", async(req, res) => {
     }
 })
 
-router.post("/getpublishers", async(req, res) => {
+router.get("/getpublishers", async(req, res) => {
     try {
         const publishers  = await db.getPublishers();
-        res.status(200).json({succss: 'Got publishers'})
+        res.status(200).json(publishers)
         console.log(publishers)
     } catch (err) {
         console.log('Error: Failed to get publishers.', err);
