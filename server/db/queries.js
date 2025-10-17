@@ -14,8 +14,13 @@ async function deleteGame(gameid) {
     await pool.query("DELETE FROM games WHERE id = $1", [gameid]);
 }
 
+async function addPublisher(publisher_name) {
+    await pool.query("INSERT INTO publishers (publisher) VALUES ($1)", [publisher_name]);
+}
+
 module.exports = {
     getAllGames,
     addNewGame,
-    deleteGame
+    deleteGame,
+    addPublisher
 };
