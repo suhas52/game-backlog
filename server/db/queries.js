@@ -1,0 +1,21 @@
+const pool = require('./pool');
+
+async function getAllGames() {
+    const { rows } = await pool.query("SELECT * FROM games");
+    return rows;
+};
+
+async function addNewGame(title, release_date, start_date = null, end_date = null, publisher_id = null) {
+    await pool.query("INSERT INTO games (title, release_date, start_date, end_date, publisher_id) VALUES ($1, $2, $3, $4, $5)"
+        , [title, release_date, start_date, end_date, publisher_id]);
+}
+
+async function deleteGame(gameid) {
+    await pool.query("DELETE FROM games WHERE id = $1", [gameid]);
+}
+
+module.exports = {
+    getAllGames,
+    addNewGame,
+    deleteGame
+};
