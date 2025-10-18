@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from 'react'
-import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -11,9 +10,23 @@ import CardActions from '@mui/material/CardActions';
 import '../App.css'
 
 
-function Gamelist() {
+function Gamelist( {categoryId} ) {
     const [gameList, setGameList] = useState([]);
     
+    const filterByCategory = (game) => {
+      if (categoryId !== '') {
+      
+        if (game.category_id === categoryId.category) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+      else {
+        return true;
+      }
+    }
     
     useEffect(() => {
         const getData = async () => {
@@ -38,8 +51,10 @@ function Gamelist() {
     }
     
     return (
-  <main className="game-list">
-    {gameList.map((game) => (
+      <main className="game-list">
+    {gameList
+    .filter(game => filterByCategory(game))
+    .map((game) => (
       <Card key={game.id} sx={{ maxWidth: 345 }}>
         <CardActionArea>
           <CardMedia
