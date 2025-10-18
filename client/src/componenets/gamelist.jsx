@@ -25,6 +25,17 @@ function Gamelist() {
         
         getData();
     }, [])
+
+    const handleDeleteGame = async (id) => {
+      console.log(id);
+      const response = await fetch('http://localhost:3000/api/deletegame', {
+        method: 'DELETE',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({ id: id})
+      })
+    }
     
     return (
   <main className="game-list">
@@ -47,8 +58,8 @@ function Gamelist() {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
-            Share
+          <Button onClick={() => handleDeleteGame(game.id)}size="small" color="primary">
+            Delete
           </Button>
         </CardActions>
       </Card>

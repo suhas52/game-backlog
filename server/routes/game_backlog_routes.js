@@ -30,7 +30,7 @@ router.post("/addgame", async (req, res) => {
 
 router.delete("/deletegame", async (req, res) => {
     try {
-        await db.deleteGame(4);
+        await db.deleteGame(req.body.id);
         res.status(200).json({success: 'Deleted game'})
     } catch (err) {
         console.log('Error: Failed to delete game.', err);
@@ -51,12 +51,22 @@ router.post("/addpublisher", async(req, res) => {
 router.get("/getpublishers", async(req, res) => {
     try {
         const publishers  = await db.getPublishers();
-        res.status(200).json(publishers)
-        console.log(publishers)
+        res.status(200).json(publishers);
+        console.log(publishers);
     } catch (err) {
         console.log('Error: Failed to get publishers.', err);
         res.status(500).json({error: err})
     }
 } )
+
+router.get("/getcategories", async(req, res) => {
+    try {
+        const categories = await db.getCategories();
+        res.status(200).json(categories);
+    } catch (err) {
+        console.log('Error: Failed to get categories.', err);
+        res.status(500).json({error: err})
+    }
+})
 
 module.exports = router;
