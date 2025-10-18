@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import * as React from 'react';
 import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
 function PublisherMenu( { formData, setFormData }) {

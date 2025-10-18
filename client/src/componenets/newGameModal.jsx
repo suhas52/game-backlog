@@ -5,7 +5,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import PublisherMenu from './publisherlist';
-import { useState, useEffect} from 'react';
+import { useState } from 'react';
+import CategoriesList from './categorieslist';
 
 
 function AddNewGameModel() {
@@ -45,7 +46,7 @@ function AddNewGameModel() {
     return (
         <>
         <Button variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
+        Add New Game
         </Button>
         
         <Dialog open={open} onClose={handleClose}>
@@ -74,6 +75,7 @@ function AddNewGameModel() {
         ))}
         
         <PublisherMenu formData={formData} setFormData={setFormData}/>
+        <CategoriesList formData={formData} setFormData={setFormData}/>
         </form>
         <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>

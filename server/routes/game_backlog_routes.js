@@ -18,13 +18,13 @@ router.get("/gamelist", async (req, res) => {
 
 router.post("/addgame", async (req, res) => {
     try {
-        const { title, release_date, start_date, end_date, description, publisher} = req.body;
-        console.log( title, release_date, start_date, end_date, description, publisher )
-        await db.addNewGame(title, release_date, start_date, end_date, publisher, description,  null);
+        const { title, release_date, start_date, end_date, description, publisher, cover, category} = req.body;
+        console.log( title, release_date, start_date, end_date, description, publisher, cover, category )
+        await db.addNewGame(title, release_date, start_date, end_date, publisher, description, null, category); //null cover because the file upload feature is not implemented yet.
         res.status(200).json({status: 'Added game'});
     } catch (err) {
-        console.log('Error: Failed to add game.')
-        res.status(500).json({error: 'Failed to add game.'})
+        console.log('Error: Failed to add game.', err)
+        res.status(500).json({status: 'Failed to add game.', error: err})
     }
 })
 
